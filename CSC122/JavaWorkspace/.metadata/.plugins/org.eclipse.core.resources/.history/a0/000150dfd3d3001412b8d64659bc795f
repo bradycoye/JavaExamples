@@ -1,0 +1,71 @@
+/**
+ * File:	LinkedList.java
+ * Author:	Brady Coye
+ * Description:	Linked list using generic type
+ * 2/23/15
+ */
+
+public class LinkedList <E> {
+	private Node <E> head;
+	private int count = 0;
+
+	// default constructor for list
+	public LinkedList () {
+		head = null;
+		count = 0;
+	}
+
+	public int getCount () {
+		return count;
+	}
+
+	// add new front value to the list
+	public void addFront (E val) {
+		Node <E> n = new Node(val, head);
+		head = n;
+		count ++;
+	}
+
+	public E removeFront() {
+		if (count == 0) {
+			return null;
+		} else {
+			E temp = head.value;
+			Node <E> n = new Node(head.next, null);
+			head = n;
+			count--;
+			return temp;
+		}
+	}
+
+	public E valueAt (int pos) {
+		if (pos >= count || pos < 0) {
+			return null;
+		} else {
+			Node<E> n = head;
+			for (int i = 0; i < count; i++) {
+				if (i == pos) {
+					return n.value;
+				} else {
+					n = n.next;
+				}
+			}
+		}
+		return null;
+	}
+
+
+	public String toString () {
+
+		String result = "";
+		Node <E> current = head;
+		while(current != null){
+			result += current.value + ", ";
+			current = current.next;
+
+		}
+		System.out.print("List: " + result);
+		return "List: " + result;
+	}
+
+}

@@ -1,0 +1,10 @@
+The total square footage of the development is: 45450
+The average square footage of the development is: 1976.0
+The square footage of the all the houses with house number 3 is: 6200
+The grid layout for the development is: 
+XX-X------
+X------XX-
+XXXXXXXXXX
+---X-X-X--
+X---X-X-X-
+

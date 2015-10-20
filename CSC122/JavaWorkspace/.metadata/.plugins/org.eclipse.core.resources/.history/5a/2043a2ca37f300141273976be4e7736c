@@ -1,0 +1,25 @@
+/**
+ * File:	Palindrome.java
+ * Author:	Brady Coye
+ * Description:	determines whether letters in the string are the same 
+ * forwards and backwards
+ * Last Modified:	1/25/2015
+ */
+
+
+public class test {
+    
+	private int one= 10;
+	private int two = 3;
+
+	
+    public test() {
+	System.out.println(one/two);
+
+    }
+   
+    public static void main(String s){
+    	
+    }
+}
+    

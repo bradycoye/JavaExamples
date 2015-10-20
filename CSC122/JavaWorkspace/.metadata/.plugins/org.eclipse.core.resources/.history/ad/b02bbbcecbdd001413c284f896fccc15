@@ -1,0 +1,144 @@
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.Scanner;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+/**
+ * File:	WaterFlow.java
+ * Author:	Brady Coye
+ * Description:	takes elevation from text file and determines if water can flow
+ * 3/30/2015
+ */
+
+public class WaterFlow{
+	protected int [][] elevation;
+	private Queue<Coordinate> queue;
+	private Coordinate currentPos, lastPos;
+	private int currentElevation;
+	private Boolean onEdge;
+
+	public WaterFlow (File data) {
+		// opens file and sorts data into array
+		Scanner fileIn = null;
+		try {
+			fileIn = new Scanner(data);
+		} catch (FileNotFoundException e) {
+			System.out.println("File: " + " is not found");
+			System.exit(0);
+		}
+		int row = fileIn.nextInt();
+		int column = fileIn.nextInt();
+		elevation = new int [row][column];
+		while( fileIn.hasNextInt() )  {
+			for (int i=0; i < row; i++) {
+				for (int j=0; j < column; j++) {
+					elevation[i][j] = fileIn.nextInt();
+				}
+			}
+		}
+		fileIn.close();
+		System.out.println(Arrays.deepToString(elevation));
+	}
+
+	private void addOptionsFrom (Coordinate c) {
+		Coordinate n = new Coordinate(c.y +1, c.x);
+		Coordinate s = new Coordinate(c.y -1, c.x);
+		Coordinate e = new Coordinate(c.y, c.x +1);
+		Coordinate w = new Coordinate(c.y, c.x -1);
+
+		if (canMoveTo(n)) {
+			queue.enqueue(n);
+		}
+		if (canMoveTo(s)){
+			queue.enqueue(s);
+		}
+		if (canMoveTo(e)){
+			queue.enqueue(e);
+		}
+		if (canMoveTo(w)){
+			queue.enqueue(w);
+		}
+	}
+
+	public boolean canFlowOffMap (Coordinate drop) throws Exception{
+		currentElevation = elevation[drop.y][drop.x];
+		currentPos = drop;
+		queue = new Queue<Coordinate>();
+		queue.enqueue(currentPos);
+
+		if (onEdge(currentPos)){
+			return onEdge;
+		}
+
+		while( hasMoreChoices() && (!onEdge(currentPos))) {
+			Coordinate next = queue.dequeue();
+			currentPos = next;
+			addOptionsFrom (next);
+			System.out.println(next.x);
+			System.out.println(next.y);
+		}
+
+		if (onEdge(currentPos)) {
+			return onEdge;
+		}
+		else {
+			return false;
+		}
+	}
+
+
+	public boolean onEdge (Coordinate c) {
+		if (c.x == 0 || c.y == 0 || (c.x == elevation[0].length -1) || (c.y == elevation.length - 1)) {
+			onEdge = true;
+			return true;
+		}
+		return false;
+	}
+
+	public boolean hasMoreChoices()
+	{
+		return (queue.count() > 0); 
+	}
+
+	public boolean canMoveTo (Coordinate c) {
+		if (c.x <0 || c.y < 0){
+			return false;
+		} else if (c.x > elevation[0].length -1 || c.y > elevation.length - 1){
+			return false;
+		} else if (elevation[currentPos.y][currentPos.x] > elevation[c.y][c.x]){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/*
+	 * main method only runs the program so that this class is expandable
+	 */
+	public static void main(String[] args) throws Exception {
+
+		File data = new File("waterFlowSample.txt");
+		WaterFlow n = new WaterFlow(data);
+		
+
+		Scanner startInput = new Scanner(System.in);
+		System.out.println("Enter the start width: ");
+		int posX = startInput.nextInt();
+		System.out.println("Enter the start height: ");
+		int posY = startInput.nextInt();
+		Coordinate start = new Coordinate(posX,posY);
+		if (n.canFlowOffMap(start)) {
+			System.out.print("Yeah!");
+		} else {
+			System.out.print("No....");
+		}
+		WaterFlowGUI ng = new WaterFlowGUI(data);
+
+	}
+}

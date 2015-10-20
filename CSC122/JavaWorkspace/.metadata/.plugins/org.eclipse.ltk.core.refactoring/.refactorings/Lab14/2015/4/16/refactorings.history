@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;average&apos; in &apos;WaterFlow.WaterFlow(...)&apos; to &apos;total&apos;&#x0A;- Original project: &apos;Lab14&apos;&#x0A;- Original element: &apos;WaterFlow.WaterFlow(File).average&apos;&#x0A;- Renamed element: &apos;average&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;average&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;{WaterFlow.java[WaterFlow~WaterFlow~QFile;@average!2066!2084!2073!2079!D!0!false" name="total" references="true" stamp="1429127872802" version="1.0"/>
+</session>

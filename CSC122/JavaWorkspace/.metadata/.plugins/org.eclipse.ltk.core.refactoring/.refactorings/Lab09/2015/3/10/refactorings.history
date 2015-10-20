@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;wP&apos; in &apos;WordListTest.testIndexOf()&apos; to &apos;wL&apos;&#x0A;- Original project: &apos;Lab09&apos;&#x0A;- Original element: &apos;WordListTest.testIndexOf().wP&apos;&#x0A;- Renamed element: &apos;wP&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;wP&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;{WordListTest.java[WordListTest~testIndexOf@wP!689!717!698!699!QWordList;!0!false" name="wL" references="true" stamp="1425608054340" version="1.0"/>
+</session>

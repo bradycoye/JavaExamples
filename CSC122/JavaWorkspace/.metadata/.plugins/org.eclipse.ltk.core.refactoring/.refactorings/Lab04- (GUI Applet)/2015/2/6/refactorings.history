@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;Einstein.java&apos; to &apos;Lab04- (GUI Applet)/src&apos;&#x0A;- Original project: &apos;Lab04- (GUI Applet)&apos;&#x0A;- Destination element: &apos;Lab04- (GUI Applet)/src&apos;&#x0A;- Original element: &apos;Einstein.java&apos;&#x0A;- Update references to refactored element" description="Move file" destination="/src" element1="Einstein.java" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1423078397095" units="0" version="1.0"/>
+</session>

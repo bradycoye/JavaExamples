@@ -1,0 +1,92 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1343\cocoasubrtf160
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red127\green0\blue85;\red63\green95\blue191;\red63\green127\blue95;
+\red0\green0\blue192;\red106\green62\blue62;\red42\green0\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs22 \cf2 import\cf0  java.util.Scanner;\
+\
+\pard\pardeftab720
+\cf3 /**\cf0 \
+\cf3  * File:	AMaze.java\cf0 \
+\cf3  * Author:	\ul Brady\ulnone  \ul Coye\ulnone , \ul Bryan\ulnone  \ul Catron\cf0 \ulnone \
+\cf3  * Description:	Displays graphical components of the grid. Relies on GridRunner class to organize \cf0 \
+\cf3  * the search options and maintain the current location of the "player"\cf0 \
+\cf3  * 3/20/15\cf0 \
+\cf3  */\cf0 \
+\pard\pardeftab720
+\cf2 public\cf0  \cf2 class\cf0  GMaze \{\
+	\cf4 //static GridRunner \ul gr\ulnone ;	//grid utility class\cf0 \
+	\cf2 static\cf0  GraphicalGridRunner \cf5 gr\cf0 ;\
+\
+	\cf4 //check all four directions from c and add to future choice list\cf0 \
+	\cf2 private\cf0  \cf2 static\cf0  \cf2 void\cf0  addOptionsFrom (Coordinate \cf6 c\cf0 ) \
+	\{\
+		\cf4 //for each direction, add if it is a legal choice\cf0 \
+		\cf2 for\cf0  (GridRunner.Direction \cf6 d\cf0 : GridRunner.Direction.values())\
+		\{\
+			\cf2 switch\cf0  (\cf6 d\cf0 )\{\
+			\cf2 case\cf0  \cf5 North\cf0 : \
+				Coordinate \cf6 north\cf0  = \cf2 new\cf0  Coordinate(\cf6 c\cf0 .\cf5 x\cf0 ,\cf6 c\cf0 .\cf5 y\cf0 -1);\
+				\cf2 if\cf0  (\cf5 gr\cf0 .canMoveTo(\cf6 north\cf0 ))\
+					\cf5 gr\cf0 .addChoice(\cf6 north\cf0 );\
+				\cf2 break\cf0 ;\
+			\cf2 case\cf0  \cf5 South\cf0 : \
+				Coordinate \cf6 south\cf0  = \cf2 new\cf0  Coordinate(\cf6 c\cf0 .\cf5 x\cf0 ,\cf6 c\cf0 .\cf5 y\cf0 +1);\
+				\cf2 if\cf0  (\cf5 gr\cf0 .canMoveTo(\cf6 south\cf0 ))\
+					\cf5 gr\cf0 .addChoice(\cf6 south\cf0 );\
+				\cf2 break\cf0 ;\
+			\cf2 case\cf0  \cf5 East\cf0 : \
+				Coordinate \cf6 east\cf0  = \cf2 new\cf0  Coordinate(\cf6 c\cf0 .\cf5 x\cf0 +1,\cf6 c\cf0 .\cf5 y\cf0 );\
+				\cf2 if\cf0  (\cf5 gr\cf0 .canMoveTo(\cf6 east\cf0 ))\
+					\cf5 gr\cf0 .addChoice(\cf6 east\cf0 );\
+				\cf2 break\cf0 ;\
+			\cf2 case\cf0  \cf5 West\cf0 : \
+				Coordinate \cf6 west\cf0  = \cf2 new\cf0  Coordinate(\cf6 c\cf0 .\cf5 x\cf0 -1,\cf6 c\cf0 .\cf5 y\cf0 );\
+				\cf2 if\cf0  (\cf5 gr\cf0 .canMoveTo(\cf6 west\cf0 ))\
+					\cf5 gr\cf0 .addChoice(\cf6 west\cf0 );\
+				\cf2 break\cf0 ;		\
+			\}\
+		\}\
+	\}\
+\
+	\cf2 public\cf0  \cf2 static\cf0  \cf2 void\cf0  main(String[] \cf6 args\cf0 ) \cf2 throws\cf0  Exception \{\
+		\cf4 //read initial graph from text file\cf0 \
+		\
+		Scanner \cf6 in\cf0  = \cf2 new\cf0  Scanner(System.\cf5 in\cf0 );\
+		System.\cf5 out\cf0 .print(\cf7 "Enter the file name: "\cf0 );\
+		String \cf6 file\cf0  = \cf6 in\cf0 .nextLine();\
+		\cf5 gr\cf0  = \cf2 new\cf0  GraphicalGridRunner(\cf6 file\cf0 );\
+	\
+\
+		Coordinate \cf6 donePos\cf0  = \cf5 gr\cf0 .getEnd(); \cf4 //save target grid location\cf0 \
+		addOptionsFrom (\cf5 gr\cf0 .getStart());   \cf4 //load initial choices\cf0 \
+\
+\
+		\cf4 //while choices exist and not at end\cf0 \
+		\cf2 while\cf0  (\cf5 gr\cf0 .hasMoreChoices() && !(\cf5 gr\cf0 .getCurrent().equals(\cf6 donePos\cf0 )))\
+		\{\
+			\cf4 //get next choice & evaluate moves from there\cf0 \
+			Coordinate \cf6 next\cf0  = \cf5 gr\cf0 .getChoice();\
+			\cf5 gr\cf0 .moveTo(\cf6 next\cf0 );\
+			\cf5 gr\cf0 .markAsVisited(\cf6 next\cf0 );	\cf4 //been there...\cf0 \
+			addOptionsFrom (\cf6 next\cf0 );  \cf4 //where to move from here\cf0 \
+			Thread.sleep(250);\
+		\}\
+\
+		\cf4 //Alert user with results\cf0 \
+		\cf2 if\cf0  (\cf5 gr\cf0 .hasMoreChoices())\{\
+			System.\cf5 out\cf0 .println(\cf7 "Solved the maze"\cf0 );\
+			\cf5 gr\cf0 .showFinished(\cf2 true\cf0 );\
+		\}\
+		\cf2 else\cf0  \{\
+			System.\cf5 out\cf0 .println (\cf7 "No solution to the maze"\cf0 );\
+			\cf5 gr\cf0 .showFinished(\cf2 false\cf0 );\
+		\}\
+\
+	\}\
+\
+\}\
+}
